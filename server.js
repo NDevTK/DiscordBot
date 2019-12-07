@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 client.login("N/A");
 
-const NotEmojiREGEX = /[^\s|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/g;
+const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40[\uDD00-\uDDEF|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/g;
 
 client.on("message", (message) => {
     if(message.author.id === client.user.id) return;
@@ -17,7 +17,7 @@ client.on("message", (message) => {
 });
 
 function NotEmoji(string) {
-  return NotEmojiREGEX.test(string);
+  return EmojiWhitelist.test(string);
 }
 
 function getRandom(max) {

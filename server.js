@@ -4,7 +4,7 @@ const Markov = require('js-markov');
 client.login(process.env.discord);
 
 const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40[\uDD00-\uDDEF|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/g;
-
+replaces = new Map();
 client.on("message", (message) => {
     if(message.author.id === client.user.id) return;
     switch(message.channel.id) {
@@ -20,6 +20,10 @@ client.on("message", (message) => {
 		    message.delete();
 			message.channel.send(MarkovRandom(message.content));
 			break;
+		case "652885633047461920": // Apply replaces
+			message.delete();
+			Replaces(message);
+			break;
 		case "652643622356910090": // Remove message that are not in EmojiWhitelist
 			if(NotEmoji(message.content)) message.delete();
 	}
@@ -27,6 +31,28 @@ client.on("message", (message) => {
 
 function NotEmoji(string) {
   return EmojiWhitelist.test(string);
+}
+
+function Replaces(message) {
+	if(!message.content.startsWith("/")) return ReplaceMessage(message);
+	let args = message.content.split(" ");
+	switch(args[0]) {
+		case "/reset":
+			return replaces.clear();
+		case "/replace":
+			if(args.length === 3) {
+				return replaces.set(args[1], args[2]);
+			}
+	}
+	return ReplaceMessage(message);
+}
+
+function ReplaceMessage(message) {
+	var content = message.content;
+	replaces.forEach((value, key) => {
+		content = content.replace(key, value);
+	});
+	message.channel.send(content);
 }
 
 function MarkovRandom(input) {

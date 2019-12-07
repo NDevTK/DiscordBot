@@ -21,7 +21,7 @@ client.on("message", (message) => {
 			message.channel.send(MarkovRandom(message.content));
 			break;
 		case "652885633047461920": // Apply replaces
-			message.delete();
+		    message.delete();
 			Replaces(message);
 			break;
 		case "652643622356910090": // Remove message that are not in EmojiWhitelist
@@ -35,13 +35,14 @@ function NotEmoji(string) {
 
 function Replaces(message) {
 	if(!message.content.startsWith("/")) return ReplaceMessage(message);
-	let args = message.content.split(" ");
-	switch(args[0]) {
+	let command = message.content.split(" ")[0];
+	switch(command) {
 		case "/reset":
 			return replaces.clear();
 		case "/replace":
-			if(args.length === 3) {
-				return replaces.set(args[1], args[2]);
+		    var data = message.content.substr(9).split(/@@@(.+)/);
+			if(data.length === 3) {
+				return replaces.set(data[0], data[1]);
 			}
 	}
 	return ReplaceMessage(message);

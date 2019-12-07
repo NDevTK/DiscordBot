@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const Markov = require('js-markov');
 client.login(process.env.discord);
 
 const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40[\uDD00-\uDDEF|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/g;
@@ -7,17 +8,39 @@ const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40[\uDD00-
 client.on("message", (message) => {
     if(message.author.id === client.user.id) return;
     switch(message.channel.id) {
-		case "652623066677116948":
+		case "652623066677116948": // Apply Typoz to message
 		    message.delete();
 			message.channel.send(Typoifier(message.content));
 			break;
-		case "652643622356910090":
+		case "652854590911414283": // Reverse message
+		    message.delete();
+			message.channel.send(reverseString(message.content));
+			break;
+		case "652857164850790400": // Apply markov chain using message
+		    message.delete();
+			message.channel.send(MarkovRandom(message.content));
+			break;
+		case "652643622356910090": // Remove message that are not in EmojiWhitelist
 			if(NotEmoji(message.content)) message.delete();
 	}
 });
 
 function NotEmoji(string) {
   return EmojiWhitelist.test(string);
+}
+
+function MarkovRandom(input) {
+	var m = new Markov();
+    m.addStates(input);
+    m.train();
+    return m.generateRandom();
+}
+
+function reverseString(str) {
+    var splitString = str.split("");
+    var reverseArray = splitString.reverse();
+    var joinArray = reverseArray.join("");
+    return joinArray;
 }
 
 function getRandom(max) {

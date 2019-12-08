@@ -47,7 +47,7 @@ function Text2Bin(input) {
 }
 
 function Text2Seed(input) {
-	return Array(input.length).fill(":chestnut:").join("");
+	return input.replace(/\w/g, ":chestnut:").replace(" ", "  ");
 }
 
 

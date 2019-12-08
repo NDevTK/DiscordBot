@@ -7,3 +7,5 @@ A discord bot that does stuff
 - reverse messages provided
 - markov-chain trained off a message sent (Probably works better with a lot of data)
 - user controled replaces of user input
+- ROT47 Cipher
+- Text to binary

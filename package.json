@@ -9,6 +9,7 @@
   "author": "officialnoob",
   "license": "MIT",
   "dependencies": {
+    "caesar-salad": "^2.1.0",
     "discord.js": "^11.5.1",
     "js-markov": "^3.0.1"
   }

@@ -33,6 +33,10 @@ client.on("message", (message) => {
 		    message.delete();
 			message.channel.send(Text2Bin(message.content));
 			break;
+		case "653329639477084160": // Seeds
+		    message.delete();
+			message.channel.send(Text2Seed(message.content));
+			break;
 		case "652643622356910090": // Remove message that are not in EmojiWhitelist
 			if(NotEmoji(message.content)) message.delete();
 	}
@@ -41,6 +45,11 @@ client.on("message", (message) => {
 function Text2Bin(input) {
 	return Array.from(input).map((each)=>each.charCodeAt(0).toString(2)).join(" ");
 }
+
+function Text2Seed(input) {
+	return Array(input.length).fill(":chestnut:").join("");
+}
+
 
 function NotEmoji(string) {
   return EmojiWhitelist.test(string);

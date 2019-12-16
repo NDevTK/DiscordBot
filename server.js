@@ -4,10 +4,19 @@ const Markov = require('js-markov');
 const salad = require('caesar-salad');
 client.login(process.env.discord);
 
+client.on("ready", () => {
+	client.user.setActivity("Fake News", { type: "WATCHING"});
+	anonymous = client.channels.get('656126149381849089');
+})
+
 const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40[\uDD00-\uDDEF|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/g;
 replaces = new Map();
+
 client.on("message", (message) => {
     if(message.author.id === client.user.id) return;
+	if(message.channel.type === "dm") {
+		return anonymous.send(message.content);
+	}
     switch(message.channel.id) {
 		case "652623066677116948": // Apply Typoz to message
 		    message.delete();

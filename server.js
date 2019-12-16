@@ -38,7 +38,12 @@ client.on("message", (message) => {
 			message.channel.send(Text2Seed(message.content));
 			break;
 		case "652643622356910090": // Remove message that are not in EmojiWhitelist
-			if(NotEmoji(message.content)) message.delete();
+		    if(NotEmoji(message.content)) message.delete();
+			message.channel.fetchMessages({limit: 35}).then(messages => {
+			messages.forEach(msg => {
+				if(NotEmoji(msg.content)) msg.delete();
+			});
+		});
 	}
 });
 

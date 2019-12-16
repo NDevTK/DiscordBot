@@ -57,7 +57,7 @@ client.on("message", (message) => {
 });
 
 function Text2Bin(input) {
-	return Array.from(input).map((each)=>each.charCodeAt(0).toString(2)).join(" ");
+	return Array.from(input).map((each)=>each.codePointAt(0).toString(2)).join(" ");
 }
 
 function Text2Seed(input) {

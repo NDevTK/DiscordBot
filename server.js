@@ -9,8 +9,26 @@ client.on("ready", () => {
 	anonymous = client.channels.get('656126149381849089');
 })
 
-const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40[\uDD00-\uDDEF|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/g;
+const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40[\uDD00-\uDDEF|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/;
+const FormatingOnly = /[^\s|\n]/;
+
 replaces = new Map();
+
+client.on('messageUpdate', (old, message) => {
+	switch(message.channel.id) {
+		case "652643622356910090": // Remove edited message that are not in EmojiWhitelist
+			EmojiOnly(message);
+	};
+});
+
+function EmojiOnly(message) {
+	if(NotEmoji(message.content)) message.delete();
+	message.channel.fetchMessages({limit: 35}).then(messages => {
+		messages.forEach(msg => {
+			if(NotEmoji(msg.content)) msg.delete();
+		});
+	});
+}
 
 client.on("message", (message) => {
     if(message.author.id === client.user.id) return;
@@ -47,13 +65,8 @@ client.on("message", (message) => {
 			message.channel.send(Text2Seed(message.content));
 			break;
 		case "652643622356910090": // Remove message that are not in EmojiWhitelist
-		    if(NotEmoji(message.content)) message.delete();
-			message.channel.fetchMessages({limit: 35}).then(messages => {
-			messages.forEach(msg => {
-				if(NotEmoji(msg.content)) msg.delete();
-			});
-		});
-	}
+			EmojiOnly(message);
+	};
 });
 
 function Text2Bin(input) {
@@ -66,7 +79,8 @@ function Text2Seed(input) {
 
 
 function NotEmoji(string) {
-  return EmojiWhitelist.test(string);
+  if(EmojiWhitelist.test(string)) return true;
+  return (!FormatingOnly.test(string))
 }
 
 function Replaces(message) {

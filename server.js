@@ -65,7 +65,7 @@ client.on("message", (message) => {
 		case "653329639477084160": // Seeds
 		    message.delete();
 			let result = Text2Seed(message.content);
-			if(result.includes(seed)) message.channel.send(Text2Seed(message.content));
+			if(result.includes(seed)) message.channel.send(result);
 			break;
 		case "652643622356910090": // Remove message that are not in EmojiWhitelist
 			EmojiOnly(message);
@@ -110,7 +110,7 @@ function ReplaceMessage(message) {
 }
 
 function MarkovRandom(input) {
-	var m = new Markov();
+    var m = new Markov();
     m.addStates(input);
     m.train();
     return m.generateRandom();

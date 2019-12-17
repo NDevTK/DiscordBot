@@ -12,6 +12,8 @@ client.on("ready", () => {
 const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40[\uDD00-\uDDEF|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/;
 const FormatingOnly = /[^\s|\n]/;
 
+const seed = ":chestnut:";
+
 replaces = new Map();
 
 client.on('messageUpdate', (old, message) => {
@@ -62,7 +64,8 @@ client.on("message", (message) => {
 			break;
 		case "653329639477084160": // Seeds
 		    message.delete();
-			message.channel.send(Text2Seed(message.content));
+			let result = Text2Seed(message.content);
+			if(result.includes(seed)) message.channel.send(Text2Seed(message.content));
 			break;
 		case "652643622356910090": // Remove message that are not in EmojiWhitelist
 			EmojiOnly(message);
@@ -74,7 +77,7 @@ function Text2Bin(input) {
 }
 
 function Text2Seed(input) {
-	return input.replace(/\w/g, ":chestnut:").replace(" ", "  ");
+	return input.replace(/\w/g, seed).replace(" ", "  ");
 }
 
 

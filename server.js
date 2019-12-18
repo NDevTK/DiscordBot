@@ -10,7 +10,7 @@ client.on("ready", () => {
 })
 
 const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40[\uDD00-\uDDEF|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/;
-const FormatingOnly = /[^\s|\n|\u180B-\u180D\uFE00-\uFE0F]|\uDB40[\uDD00-\uDDEF]/;
+const FormatingOnly = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F]|\uDB40[\uDD00-\uDDEF]/;
 
 const seed = ":chestnut:";
 

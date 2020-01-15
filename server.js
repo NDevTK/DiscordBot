@@ -9,7 +9,7 @@ client.on("ready", () => {
 	anonymous = client.channels.get('656126149381849089');
 })
 
-const EmojiWhitelist = /[^\s|\n|\u200b|\u180B-\u180D\uFE00-\uFE0F|\uDB40|\uDD00-\uDDEF|\u00a9|\u00ae|\u2000-\u3300|\ud83c\ud000-\udfff|\ud83d\ud000-\udfff|\ud83e\ud000-\udfff]/;
+const EmojiWhitelist = /[^\s|\n|\u{200b}|\u{180B}-\u{180D}\u{FE00}-\u{FE0F}|\u{DB40}|\u{DD00}-\u{DDEF}|\u{1f300}-\u{1f5ff}\u{1f900}-\u{1f9ff}\u{1f600}-\u{1f64f}\u{1f680}-\u{1f6ff}\u{2600}-\u{26ff}\u{2700}-\u{27bf}\u{1f1e6}-\u{1f1ff}\u{1f191}-\u{1f251}\u{1f004}\u{1f0cf}\u{1f170}-\u{1f171}\u{1f17e}-\u{1f17f}\u{1f18e}\u{3030}\u{2b50}\u{2b55}\u{2934}-\u{2935}\u{2b05}-\u{2b07}\u{2b1b}-\u{2b1c}\u{3297}\u{3299}\u{303d}\u{00a9}\u{00ae}\u{2122}\u{23f3}\u{24c2}\u{23e9}-\u{23ef}\u{25b6}\u{23f8}-\u{23fa}]/u
 const FormatingOnly = /[^\s|\n|\u00A0|\u1CBB|\u1CBA|\u2000-\u2009|\u2028|\u202A-\u202f|\u205F|\uFEFF|\uFEEC-\uFEEF|\uFEF0-\uFEF5|\u200-\u200f|\u180B-\u180D\uFE00-\uFE0F|\uDB40|\uDD00-\uDDEF]/;
 
 const seed = ":chestnut:";

@@ -2,6 +2,8 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const Markov = require('js-markov');
 const salad = require('caesar-salad');
+const fetch = require('node-fetch');
+
 client.login(process.env.discord);
 
 client.on("ready", () => {
@@ -13,7 +15,6 @@ const EmojiWhitelist = /[^\s|\n|\u{200b}|\u{180B}-\u{180D}\u{FE00}-\u{FE0F}|\u{D
 const FormatingOnly = /[^\s|\n|\u00A0|\u1CBB|\u1CBA|\u2000-\u2009|\u2028|\u202A-\u202f|\u205F|\uFEFF|\uFEEC-\uFEEF|\uFEF0-\uFEF5|\u200-\u200f|\u180B-\u180D\uFE00-\uFE0F|\uDB40|\uDD00-\uDDEF]/;
 
 const seed = ":chestnut:";
-
 replaces = new Map();
 
 client.on('messageUpdate', (old, message) => {
@@ -22,6 +23,17 @@ client.on('messageUpdate', (old, message) => {
 			EmojiOnly(message);
 	};
 });
+
+function sendMessage(webhook, content = "", username = "NoobBot [User]") {
+    fetch(webhook, {
+        method: 'post',
+        body: JSON.stringify({
+            content: content,
+            username: username
+        }),
+        headers: { 'Content-Type': 'application/json' },
+    });
+}
 
 function EmojiOnly(message) {
 	if(NotEmoji(message.content)) message.delete();
@@ -33,22 +45,22 @@ function EmojiOnly(message) {
 }
 
 client.on("message", (message) => {
-    if(message.author.id === client.user.id) return;
+    if(message.author.bot) return;
 	if(message.channel.type === "dm") {
 		return anonymous.send(message.content);
 	}
     switch(message.channel.id) {
 		case "652623066677116948": // Apply Typoz to message
 		    message.delete();
-			message.channel.send(Typoifier(message.content));
+            sendMessage(process.env.typo, Typoifier(message.content), message.author.username);
 			break;
 		case "652854590911414283": // Reverse message
 		    message.delete();
-			message.channel.send(reverseString(message.content));
+            sendMessage(process.env.revese, reverseString(message.content), message.author.username);
 			break;
 		case "652857164850790400": // Apply markov chain using message
 		    message.delete();
-			message.channel.send(MarkovRandom(message.content));
+            sendMessage(process.env.markov, MarkovRandom(message.content), message.author.username);
 			break;
 		case "652885633047461920": // Apply replaces
 		    message.delete();
@@ -56,16 +68,16 @@ client.on("message", (message) => {
 			break;
 		case "653315179756519434": // ROT47
 		    message.delete();
-			message.channel.send(salad.ROT47.Cipher().crypt(message.content));
+            sendMessage(process.env.rot47, salad.ROT47.Cipher().crypt(message.content), message.author.username);
 			break;
 		case "653320664274436140": // Text to Binary
 		    message.delete();
-			message.channel.send(Text2Bin(message.content));
+            sendMessage(process.env.binary, Text2Bin(message.content), message.author.username);
 			break;
 		case "653329639477084160": // Seeds
 		    message.delete();
 			let result = Text2Seed(message.content);
-			if(result.includes(seed)) message.channel.send(result);
+			if(result.includes(seed)) sendMessage(process.env.seeds, result, message.author.username);
 			break;
 		case "652643622356910090": // Remove message that are not in EmojiWhitelist
 			EmojiOnly(message);
@@ -106,7 +118,7 @@ function ReplaceMessage(message) {
 	replaces.forEach((value, key) => {
 		content = content.replace(key, value);
 	});
-	message.channel.send(content);
+    sendMessage(process.env.replaces, content, message.author.username);
 }
 
 function MarkovRandom(input) {

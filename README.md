@@ -1,4 +1,4 @@
-# NoobBot
+# DiscordBot
 A discord bot that does stuff
 
 - fake news created using markov-chain

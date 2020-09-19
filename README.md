@@ -10,4 +10,3 @@ A discord bot that does stuff
 - ROT47 Cipher
 - Text to binary
 - Binary to Text
-- Art

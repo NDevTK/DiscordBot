@@ -9,3 +9,5 @@ A discord bot that does stuff
 - user controled replaces of user input
 - ROT47 Cipher
 - Text to binary
+- Binary to Text
+- Art

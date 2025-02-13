@@ -145,6 +145,7 @@ function reverseString(str) {
 }
 
 function getRandom(max) {
+    // This is insecure
     return Math.floor((Math.random() * 10) % max)
 }
 

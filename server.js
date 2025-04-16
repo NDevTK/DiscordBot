@@ -20,7 +20,7 @@ replaces = new Map();
 
 client.on('messageUpdate', (old, message) => {
 	switch(message.channel.id) {
-		case "652643622356910090": // Remove edited message that are not in EmojiWhitelist
+		case "652643622356910090": // Remove edited message that are not in EmojiAllowlist
 			EmojiOnly(message);
 	};
 });
@@ -84,7 +84,7 @@ client.on("message", (message) => {
 			let result = Text2Seed(message.content);
 			if(result.includes(seed)) sendMessage(process.env.seeds, result, message.author.username);
 			break;
-		case "652643622356910090": // Remove message that are not in EmojiWhitelist
+		case "652643622356910090": // Remove message that are not in EmojiAllowlist
 			EmojiOnly(message);
 	};
 });
